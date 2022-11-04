@@ -6,15 +6,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
 import com.sample.hiltdisampleapp.R
-import com.sample.hiltdisampleapp.data.model.ForecastPojo
+import com.sample.hiltdisampleapp.data.model.MoviePojo
 import com.sample.hiltdisampleapp.ui.main.adapter.MainAdapter
 import com.sample.hiltdisampleapp.ui.main.viewmodel.MainViewModel
-import com.sample.hiltdisampleapp.utils.Constants.IMAGE_BASE_URL
 import com.sample.hiltdisampleapp.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,14 +30,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         adapter = MainAdapter(arrayListOf())
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
-            )
-        )
         recyclerView.adapter = adapter
     }
 
@@ -50,9 +41,8 @@ class MainActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     Log.v("MOVIE_DETAILS", Gson().toJson(it.data))
-                    it.data.let { movie->
-                        Glide.with(this).load(IMAGE_BASE_URL.plus(movie?.results?.get(2)?.poster_path)).into(progress_view)
-
+                    it.data.let { movie ->
+                        movie?.results?.let { it1 -> retrieveMovieList(it1) }
                     }
                 }
                 Status.LOADING -> {
@@ -66,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun retrieveList(forecastData: List<ForecastPojo.WeatherList>) {
+    private fun retrieveMovieList(movieDetails: List<MoviePojo.Movies>) {
         adapter.apply {
-            addForecast(forecastData)
+            adapter.addMovieData(movieDetails)
             notifyDataSetChanged()
         }
     }

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">HiltDISampleApp</string>
     <string name="loading">loading</string>
+    <string name="email">Email</string>
+    <string name="submit">Submit</string>
+    <string name="password">Password</string>
 </resources>

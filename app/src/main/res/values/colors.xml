@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background_color">#F5F6F7</color>
+    <color name="dark_gray">#C8C8C8</color>
+    <color name="gray">#F3F1F1</color>
+    <color name="c_gradient_1">#CF2030</color>
+    <color name="c_gradient_2">#F30707</color>
 </resources>

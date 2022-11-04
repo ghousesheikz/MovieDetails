@@ -4,24 +4,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.sample.hiltdisampleapp.R
-import com.sample.hiltdisampleapp.data.model.ForecastPojo
-import com.sample.hiltdisampleapp.utils.Constants.calculateTemperature
-import com.sample.hiltdisampleapp.utils.Constants.retriveWeekDays
-import com.sample.hiltdisampleapp.utils.SimpleAnimator
+import com.sample.hiltdisampleapp.data.model.MoviePojo
+import com.sample.hiltdisampleapp.utils.Constants
 import kotlinx.android.synthetic.main.item_layout.view.*
-import kotlin.collections.ArrayList
 
-class MainAdapter(private val weatherForeCastList: ArrayList<ForecastPojo.WeatherList>) :
+class MainAdapter(private val movieList: ArrayList<MoviePojo.Movies>) :
     RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
-    private lateinit var simpleItemAnimator: SimpleAnimator
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(weatherForeCast: ForecastPojo.WeatherList) {
+        fun bind(movieDetails: MoviePojo.Movies) {
             itemView.apply {
-                txt_dayname.text=retriveWeekDays(weatherForeCast.dt.toLong())
-                txt_temperature.text = calculateTemperature(weatherForeCast.main.temp)
+                txtTitle.text = movieDetails.title
+                Glide.with(this).load(Constants.IMAGE_BASE_URL.plus(movieDetails.poster_path))
+                    .into(image)
+
             }
         }
     }
@@ -31,18 +30,16 @@ class MainAdapter(private val weatherForeCastList: ArrayList<ForecastPojo.Weathe
             LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
         )
 
-    override fun getItemCount(): Int = weatherForeCastList.size
+    override fun getItemCount(): Int = movieList.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        simpleItemAnimator = SimpleAnimator()
-        simpleItemAnimator.animateAdd(holder)
-        holder.bind(weatherForeCastList[position])
+        holder.bind(movieList[position])
     }
 
-    fun addForecast(weatherForeCast: List<ForecastPojo.WeatherList>) {
-        this.weatherForeCastList.apply {
+    fun addMovieData(movieDetails: List<MoviePojo.Movies>) {
+        this.movieList.apply {
             clear()
-            addAll(weatherForeCast)
+            addAll(movieDetails)
         }
     }
 }
