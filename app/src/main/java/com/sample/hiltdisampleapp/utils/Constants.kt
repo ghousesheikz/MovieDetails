@@ -11,6 +11,11 @@ object Constants {
 
     private val ROTATION = 6000L
 
+    const val API_KEY="34a0ba8f9e880456c42eaa1b2cd21f9f"
+    const val LANGUAGE = "en-US"
+    const val PAGE = 1
+    const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w220_and_h330_face"
+
     const val APPID="9b8cb8c7f11c077f8c4e217974d9ee40"
     const val CITY = "Bengaluru"
 
